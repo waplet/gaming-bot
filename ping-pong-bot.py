@@ -60,6 +60,9 @@ def handle_command(command, channel, current_user):
             post_in_chat({"attachments": '', "response": response, "channel": channel})
             return
 
+        if (member_profile['user']['id'] == BOT_ID):
+            return
+
         try:
             send_public_invitation(member_profile, channel, current_user)
         except:
