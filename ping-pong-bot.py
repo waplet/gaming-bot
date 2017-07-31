@@ -55,12 +55,9 @@ def handle_command(command, channel, current_user):
     if len(user_input) == 2 and get_input_command(user_input, 0) == INVITE_COMMAND:
         member_profile = channel_profiles.get(re.sub('[<>@]', '', get_input_command(user_input, 1).upper()))
 
-        if (member_profile['user']['id'] == current_user):
+        if member_profile['user']['id'] == current_user or member_profile['user']['id'] == BOT_ID:
             response = 'Šis lietotājs nevar būt izaicināts!'
             post_in_chat({"attachments": '', "response": response, "channel": channel})
-            return
-
-        if (member_profile['user']['id'] == BOT_ID):
             return
 
         try:
