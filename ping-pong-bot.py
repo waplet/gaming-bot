@@ -12,6 +12,7 @@ BOT_ID = os.environ.get('BOT_ID')
 BOT_NICKNAME = 'ping-pong-bot2'
 BOT_AT = '<@' + BOT_ID + '>'
 
+COMMAND_PREFIX = '!'
 HELP_COMMAND = 'help'
 INVITE_COMMAND = 'invite'
 TOP_COMMAND = 'top'
@@ -149,8 +150,8 @@ def parse_simple_slack_put(slack_rtm_output):
                     and 'text' in output \
                     and 'channel' in output \
                     and 'user' in output \
-                    and output['text'].find('!') == 0:
-                return (output['text'].split('!')[1].strip().lower(), output['channel'], output['user'])
+                    and output['text'].find(COMMAND_PREFIX) == 0:
+                return (output['text'].split(COMMAND_PREFIX)[1].strip().lower(), output['channel'], output['user'])
 
 
 def render_invitation_buttons(attributes):
