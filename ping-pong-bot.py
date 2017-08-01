@@ -153,6 +153,8 @@ def parse_simple_slack_put(slack_rtm_output):
                     and output['text'].find(COMMAND_PREFIX) == 0:
                 return (output['text'].split(COMMAND_PREFIX)[1].strip().lower(), output['channel'], output['user'])
 
+    return (None, None, None)
+
 
 def render_invitation_buttons(attributes):
     user = channel_profiles.get(attributes['current_user'])
