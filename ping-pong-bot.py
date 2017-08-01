@@ -140,6 +140,18 @@ def parse_slack_output(slack_rtm_output):
 
     return (None, None, None)
 
+def parse_simple_slack_put(slack_rtm_output):
+    output_list = slack_rtm_output
+
+    if output_list and len(output_list) > 0:
+        for output in output_list:
+            if output \
+                    and 'text' in output \
+                    and 'channel' in output \
+                    and 'user' in output \
+                    and output['text'].find('!') == 0:
+                return (output['text'].split('!')[1].strip().lower(), output['channel'], output['user'])
+
 
 def render_invitation_buttons(attributes):
     user = channel_profiles.get(attributes['current_user'])
@@ -199,10 +211,16 @@ if __name__ == '__main__':
         get_channel_member_list()
         print('Member profiles retrieved!')
         while True:
-            (command, channel, user) = \
-                parse_slack_output(slack_client.rtm_read())
+            textContent = slack_client.rtm_read();
+            (command, channel, user) = parse_slack_output(textContent)
             if command and user and channel:
                 handle_command(command, channel, user)
+            # Try simple commands
+            else:
+                (command, channel, user) = parse_simple_slack_output(textContent)
+                if command and user and channel:
+                    handle_command(command, channel, user)
+
             time.sleep(READ_WEBSOCKET_DELAY)
     else:
         print('Connection failed. Invalid Slack token or bot ID?')
