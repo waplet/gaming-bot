@@ -141,7 +141,7 @@ def parse_slack_output(slack_rtm_output):
 
     return (None, None, None)
 
-def parse_simple_slack_put(slack_rtm_output):
+def parse_simple_slack_output(slack_rtm_output):
     output_list = slack_rtm_output
 
     if output_list and len(output_list) > 0:
